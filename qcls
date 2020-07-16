@@ -1,0 +1,83 @@
+[33mcommit 29405c00530330bad3e91ff2d5cce90daca1701b[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Jose Useche <jose1useche@gmail.com>
+Date:   Thu Jul 16 14:57:19 2020 -0400
+
+    26. Property Binding.
+
+[33mcommit c17d2b04445602f05447357fad6161e62cc79796[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Jose Useche <jose1useche@gmail.com>
+Date:   Thu Jul 16 14:44:08 2020 -0400
+
+    25. String Interpolation.
+
+[33mcommit 19c45a161476de6695111b3edc1d2c50c6aff443[m
+Author: Jose Useche <jose1useche@gmail.com>
+Date:   Thu Jul 16 09:16:26 2020 -0400
+
+    Conditioning the work area with class number 22.
+
+[33mcommit 9b1044137228df8e7afb72c49f0b359aa0de4570[m
+Author: Jose Useche <jose1useche@gmail.com>
+Date:   Thu Jul 16 09:13:48 2020 -0400
+
+    Cleaning the work area for the next class.
+
+[33mcommit bef8777a1297a99c853a54f686920b2123ee0e85[m
+Author: Jose Useche <jose1useche@gmail.com>
+Date:   Tue Jul 14 14:20:14 2020 -0400
+
+    23. Assignment Solution.
+
+[33mcommit 0066f47998c9c37945a8d96a76970819df26c950[m
+Author: Jose Useche <jose1useche@gmail.com>
+Date:   Mon Jul 13 15:43:19 2020 -0400
+
+    22. Fully Understanding the Component Selector.
+
+[33mcommit bfd34fc6e4c801aa52504d25d12a1bb7b8d14b6f[m
+Author: Jose Useche <jose1useche@gmail.com>
+Date:   Mon Jul 13 15:28:38 2020 -0400
+
+    21. Working with Component Styles.
+
+[33mcommit 2ee0afbeade471de8608a65f183fda1b74dd1c5c[m
+Author: Jose Useche <jose1useche@gmail.com>
+Date:   Sun Jul 12 17:21:12 2020 -0400
+
+    20. Working with Component Templates.
+
+[33mcommit 668cb3f147307a7bb364616277a44ec3ecd4a5ec[m
+Author: Jose Useche <jose1useche@gmail.com>
+Date:   Sun Jul 12 17:09:56 2020 -0400
+
+    19. Creating Components with the CLI and Nesting Components
+
+[33mcommit dd4965ed563464edce4836aaaf8d31ae4f9b4d41[m
+Author: Jose Useche <jose1useche@gmail.com>
+Date:   Sun Jul 12 16:53:07 2020 -0400
+
+    18. Using Custom Components
+
+[33mcommit 7e064f1e4b69ccab51ca4d74ed89ce8a863ca7e8[m
+Author: Jose Useche <jose1useche@gmail.com>
+Date:   Sun Jul 12 16:47:41 2020 -0400
+
+    17. Understanding the Role of AppModule and Component Declaration.
+
+[33mcommit a5997352669432023bfaf3cf2e4680fe0ca33675[m
+Author: Jose Useche <jose1useche@gmail.com>
+Date:   Fri Jul 10 14:47:02 2020 -0400
+
+    16. Creating a New Component
+
+[33mcommit 8f4cd1879e1ebee5e8c2d915bc1fd6ef8fdeed2b[m
+Author: Jose Useche <jose1useche@gmail.com>
+Date:   Fri Jul 10 11:50:00 2020 -0400
+
+    My first commit with my angular proyect!
+
+[33mcommit 4bb8fa53df45e056e3bcced24d1f0a3371034f0f[m
+Author: Jose Useche <jose1useche@gmail.com>
+Date:   Fri Jul 10 10:19:10 2020 -0400
+
+    initial commit
