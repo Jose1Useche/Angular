@@ -1,2 +1,4 @@
-<p [ngStyle]="{backgroundColor: getColor()}">Server with ID {{ serverId }} is {{ getServerStatus() }}</p><!--Unlike structural directives,
-     attribute directives don't add or remove elements. They only change the element they were placed on.-->
+<p 
+    [ngStyle]="{backgroundColor: getColor()}"
+    [ngClass]="{online: serverStatus ==='online'}">Server with ID {{ serverId }} is {{ getServerStatus() }}
+</p>
