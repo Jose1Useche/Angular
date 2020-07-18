@@ -1,3 +1,2 @@
-<p>{{ 'Server with' }} ID {{ serverId }} is {{ getServerStatus() }}</p><!--stringInterpolation me permite traerme propiedades y métodos
-como en este ejemplo para mostrarlo en el UI como un string. Fijense que {{ 'Server with' }}, no es mas que un texto que si lo colocamos
-como si fuesemos a usar stringInterpolation pues sencillamente sigue mostrando un Texto.-->
+<p [ngStyle]="{backgroundColor: getColor()}">Server with ID {{ serverId }} is {{ getServerStatus() }}</p><!--Unlike structural directives,
+     attribute directives don't add or remove elements. They only change the element they were placed on.-->
