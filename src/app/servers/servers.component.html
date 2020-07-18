@@ -7,6 +7,8 @@
     class="btn btn-primary"
     [disabled]="!allowNewServer"
     (click)="onCreateServer()">Add Server</button>
-<p>{{ serverCreationStatus }}</p>
+<p *ngIf="serverCreated">Server was created, server name is {{ serverName }}</p><!--Directives are Instructions in the DOM.
+The * is required because ngIf is a structural directive wich means it changes the structure of our DOM.
+This directive works with a boolean, true or false to show the message.-->
 <app-server></app-server>
 <app-server></app-server>
