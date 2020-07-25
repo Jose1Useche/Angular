@@ -5,10 +5,12 @@
       <input 
         type="text" 
         class="form-control" 
-        #serverNameInput><!--The localReference is only available inside of his own template. You can't uses it directly inside of the
-        component, but you can send it as ana argument of a method like onAddServer() or onAddBlueprint()-->
+        #serverNameInput>
       <label>Server Content</label>
-      <input type="text" class="form-control" [(ngModel)]="newServerContent">
+      <input 
+        type="text" 
+        class="form-control" 
+        #serverContentInput><!--You can send this information to a property with @ViewChild (Let see the .ts file).-->
       <br>
       <button
         class="btn btn-primary"
