@@ -9,10 +9,11 @@
       <button class="btn btn-danger" (click)="onDestroyFirst()">Destroy first Component</button>
       <app-server-element 
         *ngFor="let serverElement of serverElements"
-        [name]="serverElement.name"> <p>
+        [name]="serverElement.name"> 
+        <p #contentParagraph>
           <strong *ngIf="serverElement.type === 'server'" style="color: red">{{ serverElement.content }}</strong>
           <em *ngIf="serverElement.type === 'blueprint'">{{ serverElement.content }}</em>
-      </p>
+        </p>
       </app-server-element>
     </div>
   </div>
