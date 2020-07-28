@@ -6,23 +6,13 @@
 <hr>
 <div class="row">
     <div class="col-md-12">
-        <a 
-            href="#" 
-            class="list-group-item clearfix"
-            *ngFor="let recipe of recipes">
-                <div class="pull-left">
-                    <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
-                    <p class="list-group-item-text">{{ recipe.description }}</p>
-                </div>
-                <span class="pull-right">
-                    <img 
-                        [src]="recipe.imagePath" 
-                        alt="{{ recipe.name }}" 
-                        class="img-responsive" 
-                        style="max-height: 150px; width: 150px;">
-                        <!--Podemos usar StrinInterpolation y PropertyBinding para el src del tag-->
-                </span>
-        </a>
-        <app-recipe-item></app-recipe-item>
+        <!-- <app-recipe-item 
+            *ngFor="let recipe of recipes"
+            [recipeName]="recipe.name"
+            [recipeDescription]="recipe.description"
+            [recipeImage]="recipe.imagePath"></app-recipe-item> THIS IS MY WAY-->
+        <app-recipe-item
+            *ngFor="let recipeEl of recipes"
+            [recipe]="recipeEl"></app-recipe-item>
     </div>
 </div>
