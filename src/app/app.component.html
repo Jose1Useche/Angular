@@ -12,7 +12,7 @@
             [ngClass]="{odd: onlyOdd}"
             [ngStyle]="{backgroundColor: onlyOdd ? 'yellow' : 'transparent'}"
             *ngFor="let odd of oddNumbers"> {{ odd }}
-          </li><!--You can't use more of one structural directive-->
+          </li>
         </div>
         <div *ngIf="!onlyOdd">
           <li
@@ -22,6 +22,7 @@
         </div>
       </ul>
       <p appBasicHighlight>Style me with basic directive</p>
+      <p appBetterHighlight>Style me with a better directive</p>
     </div>
   </div>
 </div>
