@@ -9,6 +9,8 @@
         <div *ngIf="onlyOdd">
           <li
             class="list-group-item"
+            [ngClass]="{odd: onlyOdd}"
+            [ngStyle]="{backgroundColor: onlyOdd ? 'yellow' : 'transparent'}"
             *ngFor="let odd of oddNumbers"> {{ odd }}
           </li><!--You can't use more of one structural directive-->
         </div>
