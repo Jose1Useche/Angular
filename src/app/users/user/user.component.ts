@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -14,8 +14,15 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.user = {
       id: this.route.snapshot.params['id'],//This id is something that is encoding in the route. You can see it in appmodule
-      name: this.route.snapshot.params['name']
+      name: this.route.snapshot.params['name']//IDEM like the id.
     };
+    this.route.params
+      .subscribe(
+        (params: Params) => {
+          this.user.id = params['id'];
+          this.user.name = params['name'];
+        }
+      );
   }
 
 }
