@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { interval, Subscription, Observable } from 'rxjs'
-import { error } from '@angular/compiler/src/util';
+import { map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -22,24 +22,28 @@ export class HomeComponent implements OnInit, OnDestroy {
       let count = 0;
       setInterval(() => {
         observer.next(count);
-        if(count === 2) {
+        if(count === 5) {
           observer.complete();
         }
-        if(count >= 3) {
+        if(count > 3) {
           observer.error(new Error('Count is greater than 3!'));
         }
         count++;
       }, 1000);
     });
 
-    this.firstObsSubscription = customIntervalObservable.subscribe(data => {
-      console.log(data);
-    }, error => {
-      console.log(error);
-      alert(error.message);
-    }, () => {
-      alert('The task is completed and this function doesn\'t\ need an argument because is the complete part!');
-    });
+    this.firstObsSubscription = customIntervalObservable.pipe(filter(data => {
+      return data > 0;
+    }), map((data: number) => {
+      return 'Round: ' + (data + 1);
+    })).subscribe(data => {
+          console.log(data);
+        }, error => {
+          console.log(error);
+          alert(error.message);
+        }, () => {
+          alert('The task is completed and this function doesn\'t\ need an argument because is the complete part!');
+        });
   }
 
   ngOnDestroy(): void {
