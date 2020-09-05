@@ -14,6 +14,21 @@ genders = ['male', 'female'];
 
   suggestUserName() {
     const suggestedName = 'Superuser';
+    // this.signupForm.setValue({   //THIS IS ONE APPROACH ==> setValue() to set your whole form.
+    //   El_Grupito: {
+    //     username: suggestedName,
+    //     email: 'test1@gmail.com'
+    //   },
+    //   secret: 'teacher',
+    //   questionAnswer: 'fredy',
+    //   genero: 'male'
+    // });
+
+    this.signupForm.form.patchValue({ // patchValue() to overwrite part of the form.
+      El_Grupito: {
+        username: suggestedName
+      }
+    });
   }
 
   // onSubmit(form: NgForm) {
