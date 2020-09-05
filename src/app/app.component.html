@@ -2,7 +2,10 @@
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
       <form (ngSubmit)="onSubmit()" #f="ngForm">
-        <div id="user-data">
+        <div 
+          id="user-data" 
+          ngModelGroup="El_Grupito"
+          #elGrupito="ngModelGroup">
           <div class="form-group">
             <label for="username">Username</label>
             <input 
@@ -29,6 +32,7 @@
                 *ngIf="!email.valid && email.touched">Please enter a valid email!</span>
           </div>
         </div>
+        <p *ngIf="!elGrupito.valid && elGrupito.touched">User Data is Invalid!</p>
         <div class="form-group">
           <label for="secret">Secret Questions</label>
           <select 
