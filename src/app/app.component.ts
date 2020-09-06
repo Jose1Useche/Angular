@@ -1,5 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +6,5 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  subscriptions = ['Basic', 'Advanced', 'Pro'];
-  selectedSubscription = 'Advanced';
-  @ViewChild('signupForm', { static: false }) sgnForm: NgForm;
-  onSubmit() {
-    console.log(this.sgnForm.value);
-  }
+genders = ['male', 'female'];
 }
