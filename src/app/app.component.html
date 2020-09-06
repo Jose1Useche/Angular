@@ -1,86 +1,60 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <form (ngSubmit)="onSubmit()" #f="ngForm">
-        <div 
-          id="user-data" 
-          ngModelGroup="El_Grupito"
-          #elGrupito="ngModelGroup">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input 
-              type="text" 
-              id="username" 
-              class="form-control"
-              ngModel
-              name="username"
-              required>
-          </div>
-          <button 
-            class="btn btn-default" 
-            type="button"
-            (click)="suggestUserName()">Suggest an Username</button>
-          <div class="form-group">
-            <label for="email">Mail</label>
-            <input 
-              type="email" 
-              id="email" 
-              class="form-control"
-              ngModel
-              name="email"
-              required
-              email
-              #email="ngModel">
-              <span class="help-block"
-                *ngIf="!email.valid && email.touched">Please enter a valid email!</span>
-          </div>
-        </div>
-        <p *ngIf="!elGrupito.valid && elGrupito.touched">User Data is Invalid!</p>
+      <!-- Add a Form with the following Inputs (and Validators)
+           1) Mail address (should not be empty and should be an email address)
+           2) A Dropdown which allows the user to select from three different Subscriptions ("Basic", "Advanced", "Pro")
+              Set "Advanced" as Default
+           3) A Password field (should not be empty)
+           field)
+           4) A Submit Button
+
+           Display a warning message if the Form is invalid AND was touched. Display a warning message below each input if it's invalid.
+
+           Upon submitting the form, you should simply print the Value of the Form to the Console.
+           Optionally, display it in your template.
+      -->
+      <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <label for="secret">Secret Questions</label>
-          <select 
-            id="secret" 
+          <label for="email">Mail</label>
+          <input
+            type="email"
+            id="email"
+            ngModel
+            name="email"
+            required
+            email
             class="form-control"
-            [ngModel]="defaultQuestion"
-            name="secret">
-            <option value="pet">Your first Pet?</option>
-            <option value="teacher">Your first teacher?</option>
+            #email="ngModel">
+          <span class="help-block" *ngIf="!email.valid && email.touched">Please enter a valid email!</span>
+        </div>
+        <div class="form-group">
+          <label for="subscription">Choose a Subscription</label>
+          <select
+            name="subscription"
+            id="subscription"
+            [ngModel]="selectedSubscription"
+            class="form-control">
+            <option
+              *ngFor="let subscription of subscriptions"
+              [value]="subscription">{{ subscription }}</option>
           </select>
         </div>
         <div class="form-group">
-          <textarea 
-            name="questionAnswer" 
-            rows="3"
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            ngModel
+            required
             class="form-control"
-            [(ngModel)]="answer"></textarea>
+            #password="ngModel">
+          <span class="help-block" *ngIf="!password.valid && password.touched">Please enter a valid password!</span>
         </div>
-        <p>Your reply: {{ answer }}</p>
-        <div class="radio" *ngFor="let gender of genders">
-          <label>
-            <input 
-              type="radio"
-              name="genero"
-              ngModel
-              [value]="gender"
-              required>{{ gender }}
-          </label>
-        </div>
-        <button 
-          class="btn btn-primary" 
-          type="submit"
-          [disabled]="!f.valid">Submit</button>
+        <p *ngIf="!signupForm.valid && signupForm.touched">The form is invalid!</p>
+        <button class="btn btn-primary" type="submit">Submit</button>
       </form>
-      <hr>
-      <div class="row" *ngIf="submitted">
-        <div class="col-xs-12">
-          <h3>Your Data</h3>
-          <p>Username: {{user.myUsername}}</p>
-          <p>Mail: {{user.myEmail}}</p>
-          <p>Secret Question: {{user.mySecretQuestion}}</p>
-          <p>Answer: {{user.myAnswer}}</p>
-          <p>Gender: {{user.myGender}}</p>
-        </div>
-      </div>
     </div>
   </div>
 </div>
