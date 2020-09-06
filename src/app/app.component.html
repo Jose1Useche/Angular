@@ -70,6 +70,17 @@
           type="submit"
           [disabled]="!f.valid">Submit</button>
       </form>
+      <hr>
+      <div class="row" *ngIf="submitted">
+        <div class="col-xs-12">
+          <h3>Your Data</h3>
+          <p>Username: {{user.myUsername}}</p>
+          <p>Mail: {{user.myEmail}}</p>
+          <p>Secret Question: {{user.mySecretQuestion}}</p>
+          <p>Answer: {{user.myAnswer}}</p>
+          <p>Gender: {{user.myGender}}</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
