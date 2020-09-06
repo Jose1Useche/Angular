@@ -44,7 +44,6 @@ submitted = false;
   // }
 
   onSubmit() {
-    // console.log(this.signupForm);
     this.submitted = true;
 
     this.user.myUsername = this.signupForm.value.El_Grupito.username;
@@ -52,5 +51,7 @@ submitted = false;
     this.user.mySecretQuestion = this.signupForm.value.secret;
     this.user.myAnswer = this.signupForm.value.questionAnswer;
     this.user.myGender = this.signupForm.value.genero;
+
+    this.signupForm.reset();
   }
 }
