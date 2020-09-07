@@ -2,27 +2,31 @@
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
       <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input 
-            type="text" 
-            id="username" 
-            formControlName="usernameDesdeMiTS"
-            class="form-control">
-            <span 
-              *ngIf="!signupForm.get('usernameDesdeMiTS').valid && signupForm.get('usernameDesdeMiTS').touched"
-              class="help-block">Please enter a valid name!</span>
-        </div>
-        <div class="form-group">
-          <label for="email">email</label>
-          <input 
-            type="text" 
-            id="email" 
-            formControlName="emailDesdeMiTS"
-            class="form-control">
-            <span 
-              *ngIf="!signupForm.get('emailDesdeMiTS').valid && signupForm.get('emailDesdeMiTS').touched"
-              class="help-block">Please enter a valid email!</span>
+        <div formGroupName="userDataDesdeMiTS">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input 
+              type="text" 
+              id="username" 
+              formControlName="usernameDesdeMiTS"
+              class="form-control">
+              <span 
+                *ngIf="!signupForm.get('userDataDesdeMiTS.usernameDesdeMiTS').valid 
+                        && signupForm.get('userDataDesdeMiTS.usernameDesdeMiTS').touched"
+                class="help-block">Please enter a valid name!</span>
+          </div>
+          <div class="form-group">
+            <label for="email">email</label>
+            <input 
+              type="text" 
+              id="email" 
+              formControlName="emailDesdeMiTS"
+              class="form-control">
+              <span 
+                *ngIf="!signupForm.get('userDataDesdeMiTS.emailDesdeMiTS').valid 
+                        && signupForm.get('userDataDesdeMiTS.emailDesdeMiTS').touched"
+                class="help-block">Please enter a valid email!</span>
+          </div>
         </div>
         <div class="radio" *ngFor="let gender of genders">
           <label>
