@@ -8,7 +8,7 @@
                         type="text" 
                         id="name" 
                         class="form-control"
-                        name="name"
+                        name="nameFromTheForm"
                         ngModel
                         required>
                 </div>
@@ -18,7 +18,7 @@
                         type="number" 
                         id="amount" 
                         class="form-control"
-                        name="amount"
+                        name="amountFromTheForm"
                         ngModel
                         required
                         [pattern]="'^[1-9]+[0-9]*$'"><!--pattern="^[1-9]+[0-9]*$"-->
@@ -31,7 +31,12 @@
                         type="submit" 
                         style="margin-right: 3px;" 
                         [disabled]="!f.valid">{{ editMode ? 'Update' : 'Add' }}</button>
-                    <button class="btn btn-danger" type="button" style="margin-right: 3px;">Delete</button>
+                    <button 
+                        class="btn btn-danger" 
+                        type="button" 
+                        style="margin-right: 3px;" 
+                        (click)="onDelete()"
+                        *ngIf="editMode">Delete</button>
                     <button class="btn btn-primary" type="button" (click)="onClear()">Clear</button>
                 </div>
             </div>
