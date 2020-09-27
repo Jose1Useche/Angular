@@ -10,7 +10,7 @@
             class="badge">
             {{ server.status }}
           </span>
-          <strong>{{ server.name | shorten }}</strong> | 
+          <strong>{{ server.name | shorten:15 }}</strong> | <!--Los parámetros de nuestro propio Pipe se declaran luego de los :-->
           {{ server.instanceType | uppercase }} | 
           {{ server.started | date:'fullDate' | uppercase }} <!--Si colocasemos el orden de estos pipes invertidos entonces tendríamos
                                                                  un error y es por el hecho de que el uppercase pues se aplica para llevar
