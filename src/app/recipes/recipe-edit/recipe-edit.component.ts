@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { RecipeService } from '../recipe.service';
 
@@ -47,8 +47,11 @@ export class RecipeEditComponent implements OnInit {
         for(let ingredient of recipe.ingredients) {
           recipeIngredients.push(
             new FormGroup({
-              'ingredientName': new FormControl(ingredient.name),
-              'ingredientAmount': new FormControl(ingredient.amount)
+              'ingredientName': new FormControl(ingredient.name, Validators.required),
+              'ingredientAmount': new FormControl(ingredient.amount, [
+                Validators.required,
+                Validators.pattern(/^[1-9]+[0-9]*$/)
+              ])
             })
             );
         }
@@ -56,9 +59,9 @@ export class RecipeEditComponent implements OnInit {
     }
 
     this.recipeForm = new FormGroup({
-      'nameOfTheRecipe': new FormControl(recipeName),
-      'imagePathOfTheRecipe': new FormControl(recipeImagePath),
-      'descriptionOfTheRecipe': new FormControl(recipeDescription),
+      'nameOfTheRecipe': new FormControl(recipeName, Validators.required),
+      'imagePathOfTheRecipe': new FormControl(recipeImagePath, Validators.required),
+      'descriptionOfTheRecipe': new FormControl(recipeDescription, Validators.required),
       'ingredientsOfTheRecipe': recipeIngredients
     });
   }
@@ -70,8 +73,11 @@ export class RecipeEditComponent implements OnInit {
   onAddIngredient() {
     (<FormArray>this.recipeForm.get('ingredientsOfTheRecipe')).push(
       new FormGroup({
-        'ingredientName': new FormControl(),
-        'ingredientAmount': new FormControl()
+        'ingredientName': new FormControl(null, Validators.required),
+        'ingredientAmount': new FormControl(null, [
+          Validators.required,
+          Validators.pattern(/^[1-9]+[0-9]*$/)
+        ])
       })
     );
   }
