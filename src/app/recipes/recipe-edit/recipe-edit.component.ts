@@ -23,25 +23,26 @@ export class RecipeEditComponent implements OnInit {
           this.editMode = params['id'] != null;
           this.intiForm();
         }
-      );
-  }
-
-  onSubmit() {
-    console.log(this.recipeForm);
-  }
-
-  private intiForm() {
+        );
+      }
+      
+      onSubmit() {
+        console.log(this.recipeForm);
+      }
+      
+      
+      private intiForm() {
     let recipeName = '';
     let recipeImagePath = '';
     let recipeDescription = '';
     let recipeIngredients = new FormArray([]);
-
+    
     if (this.editMode) {
       const recipe = this.recipeService.getRecipe(this.id);
       recipeName = recipe.name;
       recipeImagePath = recipe.imagePath;
       recipeDescription = recipe.description;
-
+      
       if(recipe['ingredients']) {
         for(let ingredient of recipe.ingredients) {
           recipeIngredients.push(
@@ -49,7 +50,7 @@ export class RecipeEditComponent implements OnInit {
               'ingredientName': new FormControl(ingredient.name),
               'ingredientAmount': new FormControl(ingredient.amount)
             })
-          );
+            );
         }
       }
     }
@@ -65,5 +66,14 @@ export class RecipeEditComponent implements OnInit {
   get controls() {
     return (<FormArray>this.recipeForm.get('ingredientsOfTheRecipe')).controls;
   }
-
+  
+  onAddIngredient() {
+    (<FormArray>this.recipeForm.get('ingredientsOfTheRecipe')).push(
+      new FormGroup({
+        'ingredientName': new FormControl(),
+        'ingredientAmount': new FormControl()
+      })
+    );
+  }
+  
 }
