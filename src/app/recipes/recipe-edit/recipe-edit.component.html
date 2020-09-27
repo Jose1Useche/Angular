@@ -51,17 +51,26 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12">
-                    <div class="row">
-                        <div class="col-xs-8">
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="col-xs-2">
-                            <input type="number" class="form-control">
-                        </div>
-                        <div class="col-xs-2">
-                            <button class="btn btn-danger">X</button>
-                        </div>
+                <div class="col-xs-12" formArrayName="ingredientsOfTheRecipe">
+                    <div 
+                        class="row"
+                        *ngFor="let ingredientCtrl of controls; let i = index"
+                        [formGroupName]="i">
+                            <div class="col-xs-8">
+                                <input 
+                                    type="text" 
+                                    class="form-control"
+                                    formControlName="ingredientName">
+                            </div>
+                            <div class="col-xs-2">
+                                <input 
+                                    type="number" 
+                                    class="form-control"
+                                    formControlName="ingredientAmount">
+                            </div>
+                            <div class="col-xs-2">
+                                <button class="btn btn-danger">X</button>
+                            </div>
                     </div>
                 </div>
             </div>
