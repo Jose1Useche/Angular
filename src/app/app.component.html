@@ -12,7 +12,12 @@
           </span>
           <strong>{{ server.name }}</strong> | 
           {{ server.instanceType | uppercase }} | 
-          {{ server.started | date:'fullDate' }}
+          {{ server.started | date:'fullDate' | uppercase }} <!--Si colocasemos el orden de estos pipes invertidos entonces tendríamos
+                                                                 un error y es por el hecho de que el uppercase pues se aplica para llevar
+                                                                 el "string" a mayusculas, cuando viene a ejecutarse el pipe de date
+                                                                 pues el error es que no se está consiguiendo con una variable tipo date
+                                                                 sino con una variable tipo string y ahí es donde revienta el error.
+                                                                 Es importante el orden a la hora de utilizar los pipes.-->
         </li>
       </ul>
     </div>
