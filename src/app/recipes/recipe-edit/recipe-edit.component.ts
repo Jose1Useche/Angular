@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 
 @Component({
@@ -24,14 +25,31 @@ export class RecipeEditComponent implements OnInit {
           this.intiForm();
         }
         );
-      }
+  }
       
-      onSubmit() {
-        console.log(this.recipeForm);
-      }
+  onSubmit() {
+    // console.log(this.recipeForm);
+    const newRecipe = new Recipe(
+      this.recipeForm.value['nameOfTheRecipe'],
+      this.recipeForm.value['descriptionOfTheRecipe'],
+      this.recipeForm.value['imagePathOfTheRecipe'],
+      this.recipeForm.value['ingredientsOfTheRecipe'],
+    );
+
+    if(this.editMode) {
+      this.recipeService.updateRecipe(this.id, newRecipe);
+      // this.recipeService.updateRecipe(this.id, this.recipeForm.value); //Pudiesemos hacerlo así siempre y cuando los nombres de los
+                                                                          //valores del recipeForm coincidan con los nombres de las
+                                                                          //propiedades del recipe.model.ts y el orden en como están
+                                                                          //delcaradas las propiedades tambien deben coincidir con el
+                                                                          //orden en que están declarados los valores del recipeForm
+    } else {
+      this.recipeService.addRecipe(newRecipe);
+    }
+  }
       
       
-      private intiForm() {
+  private intiForm() {
     let recipeName = '';
     let recipeImagePath = '';
     let recipeDescription = '';
@@ -47,8 +65,8 @@ export class RecipeEditComponent implements OnInit {
         for(let ingredient of recipe.ingredients) {
           recipeIngredients.push(
             new FormGroup({
-              'ingredientName': new FormControl(ingredient.name, Validators.required),
-              'ingredientAmount': new FormControl(ingredient.amount, [
+              'name': new FormControl(ingredient.name, Validators.required),
+              'amount': new FormControl(ingredient.amount, [
                 Validators.required,
                 Validators.pattern(/^[1-9]+[0-9]*$/)
               ])
@@ -73,8 +91,8 @@ export class RecipeEditComponent implements OnInit {
   onAddIngredient() {
     (<FormArray>this.recipeForm.get('ingredientsOfTheRecipe')).push(
       new FormGroup({
-        'ingredientName': new FormControl(null, Validators.required),
-        'ingredientAmount': new FormControl(null, [
+        'name': new FormControl(null, Validators.required),
+        'amount': new FormControl(null, [
           Validators.required,
           Validators.pattern(/^[1-9]+[0-9]*$/)
         ])
