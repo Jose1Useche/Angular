@@ -10,7 +10,7 @@
       <ul class="list-group">
         <li
           class="list-group-item"
-          *ngFor="let server of servers | filter : filteredStatus : 'status'"
+          *ngFor="let server of servers | filter : filteredStatus : 'status' | sort : 'name'"
           [ngClass]="getStatusClasses(server)"><!--El párametro 'status' que pasamos en el pipe que se encuentra en *ngFor
                                                    se refiere a la propiedad status que se encuentra declarada dentro de los objetos
                                                    del array servers-->
@@ -19,7 +19,7 @@
             {{ server.status }}
           </span>
           <strong>{{ server.name | shorten:15 }}</strong> | <!--Los parámetros de nuestro propio Pipe se declaran luego de los :-->
-          {{ server.instanceType | uppercase }} | 
+          {{ server.instanceType | uppercase | reverse }} | 
           {{ server.started | date:'fullDate' | uppercase }} <!--Si colocasemos el orden de estos pipes invertidos entonces tendríamos
                                                                  un error y es por el hecho de que el uppercase pues se aplica para llevar
                                                                  el "string" a mayusculas, cuando viene a ejecutarse el pipe de date
