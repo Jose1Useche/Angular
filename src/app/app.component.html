@@ -1,33 +1,57 @@
 <div class="container">
   <div class="row">
-    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <input type="text" [(ngModel)]="filteredStatus">
-      <br><br>
-      <button class="btn btn-primary" (click)="onAddServer()">Add Server</button>
-      <br><br>
-      <h2>App Status: {{ appStatus | async }}</h2>
-      <hr>
-      <ul class="list-group">
-        <li
-          class="list-group-item"
-          *ngFor="let server of servers | filter : filteredStatus : 'status' | sort : 'name'"
-          [ngClass]="getStatusClasses(server)"><!--El párametro 'status' que pasamos en el pipe que se encuentra en *ngFor
-                                                   se refiere a la propiedad status que se encuentra declarada dentro de los objetos
-                                                   del array servers-->
-          <span
-            class="badge">
-            {{ server.status }}
-          </span>
-          <strong>{{ server.name | shorten:15 }}</strong> | <!--Los parámetros de nuestro propio Pipe se declaran luego de los :-->
-          {{ server.instanceType | uppercase | reverse }} | 
-          {{ server.started | date:'fullDate' | uppercase }} <!--Si colocasemos el orden de estos pipes invertidos entonces tendríamos
-                                                                 un error y es por el hecho de que el uppercase pues se aplica para llevar
-                                                                 el "string" a mayusculas, cuando viene a ejecutarse el pipe de date
-                                                                 pues el error es que no se está consiguiendo con una variable tipo date
-                                                                 sino con una variable tipo string y ahí es donde revienta el error.
-                                                                 Es importante el orden a la hora de utilizar los pipes.-->
-        </li>
-      </ul>
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <form #postForm="ngForm" (ngSubmit)="onCreatePost(postForm.value)">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            required
+            ngModel
+            name="title"
+          />
+        </div>
+        <div class="form-group">
+          <label for="content">Content</label>
+          <textarea
+            class="form-control"
+            id="content"
+            required
+            ngModel
+            name="content"
+          ></textarea>
+        </div>
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="!postForm.valid"
+        >
+          Send Post
+        </button>
+      </form>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <button class="btn btn-primary" (click)="onFetchPosts()">
+        Fetch Posts
+      </button>
+      |
+      <button
+        class="btn btn-danger"
+        [disabled]="loadedPosts.length < 1"
+        (click)="onClearPosts()"
+      >
+        Clear Posts
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <p>No posts available!</p>
     </div>
   </div>
 </div>
