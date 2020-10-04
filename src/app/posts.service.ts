@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Post } from './post.model'
 import { map, catchError } from 'rxjs/operators';
 import { Subject, throwError } from 'rxjs';
@@ -32,7 +32,10 @@ export class PostsService {
                   //Se hace el return para usar la subscripción en el componente.
         return this.http
           //podemos indicar tambien el tipo que retorna en el .post (líneas arriba)
-        .get<{ [key: string]: Post }>('https://angular-project-excercise.firebaseio.com/posts.json')
+        .get<{ [key: string]: Post }>('https://angular-project-excercise.firebaseio.com/posts.json',
+        {
+            headers: new HttpHeaders({ 'Custom-Header': 'Hello' })
+        })
         .pipe(map((responseData/*: { [key: string]: Post }*/) => { //Puedes usar un PlaceHolder property name con [] indicando que 
             //cualquier string key que viene del objeto cuyo nombre pues desconocemos, contiene un Objeto tipo Post.
         const postsArray: Post[] = [];
