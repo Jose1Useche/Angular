@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Post } from './post.model'
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import { Subject, throwError } from 'rxjs';
 
 @Injectable(/*{providedIn: 'root'}*/) //Podemos usar este approuch o podemos ir a nuestro app.module.ts y declarar este servicio dentro
@@ -17,7 +17,11 @@ export class PostsService {
         // console.log(postData);
         this.http.post<{ name: string }>(
             'https://angular-project-excercise.firebaseio.com/posts.json', //Este .json que declaramos solo es necesario para Firebase.
-            postData
+            postData,
+            {
+                observe: 'response'//Esto solo es para obtener de forma mas detallada el HttpRequest realizado. Es algo que no se usa 
+                                   //de forma común pero helo aquí
+            }
             ).subscribe(responseData => {//Ese observable es provisto por Angular por lo que no necesitamos "desusbscribirlo".
                                         //Angular lo hace por nosotros.
                 console.log(responseData);
@@ -67,6 +71,18 @@ export class PostsService {
     }
 
     deletePosts() {
-        return this.http.delete('https://angular-project-excercise.firebaseio.com/posts.json'); 
+        return this.http.delete('https://angular-project-excercise.firebaseio.com/posts.json',
+        {
+            observe: 'events' //Esto solo es para obtener de forma mas detallada el HttpRequest realizado. Es algo que no se usa 
+                              //de forma común pero helo aquí
+        }).pipe(tap(event => {
+            console.log(event);
+            if(event.type === HttpEventType.Sent) {
+                //...
+            }
+            if(event.type === HttpEventType.Response) {
+                console.log(event.body);
+            }
+        })); 
     }
 }
