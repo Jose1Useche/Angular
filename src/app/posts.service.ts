@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Post } from './post.model'
 import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Injectable(/*{providedIn: 'root'}*/) //Podemos usar este approuch o podemos ir a nuestro app.module.ts y declarar este servicio dentro
                                       //de nuestro providers array, el cual me gusta mas.
 export class PostsService {
+    error = new Subject<string>();
+    
     constructor(private http: HttpClient) {}
 
     createAndStorePost(title: string, content: string) {
@@ -17,7 +20,9 @@ export class PostsService {
             postData
             ).subscribe(responseData => {//Ese observable es provisto por Angular por lo que no necesitamos "desusbscribirlo".
                                         //Angular lo hace por nosotros.
-            console.log(responseData);
+                console.log(responseData);
+            }, error => {
+                this.error.next(error.message);
             }); 
     }
 
