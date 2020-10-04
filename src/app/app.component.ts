@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { stringify } from '@angular/compiler/src/util';
 import { Post } from './post.model';
+import { PostsService } from './posts.service';
 
 @Component({
   selector: 'app-root',
@@ -13,55 +14,32 @@ export class AppComponent implements OnInit {
   loadedPosts: Post[] = [];
   isFetching = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private postsService: PostsService) {}
 
   ngOnInit() {
-    this.fetchPosts();
+    this.postsService.fetchPost();
   }
 
   onCreatePost(postData: Post) {
-    // Send Http request
-    // console.log(postData);
-    this.http.post<{ name: string }>(
-        'https://angular-project-excercise.firebaseio.com/posts.json', //Este .json que declaramos solo es necesario para Firebase.
-        postData
-        ).subscribe(responseData => {//Ese observable es provisto por Angular por lo que no necesitamos "desusbscribirlo".
-                                     //Angular lo hace por nosotros.
-          console.log(responseData);
-        }); 
+    this.postsService.createAndStorePost(postData.title, postData.content);
+
+    //toda la lógica se envió al servicio posts.service para tener un código lo mas limpio posible. por lo general, el trabajo "sucio"
+    //lo hace el servicio en cuestión.
   }
 
   onFetchPosts() {
     // Send Http request
-    this.fetchPosts();
+    this.postsService.fetchPost();
   }
 
   onClearPosts() {
     // Send Http request
   }
 
-  private fetchPosts() {
-    this.isFetching = true;
-    this.http
-          //podemos indicar tambien el tipo que retorna en el .post (líneas arriba)
-    .get<{ [key: string]: Post }>('https://angular-project-excercise.firebaseio.com/posts.json')
-    .pipe(map((responseData/*: { [key: string]: Post }*/) => { //Puedes usar un PlaceHolder property name con [] indicando que cualquier
-                                                     //string key que viene del objeto cuyo nombre pues desconocemos, contiene un Objeto 
-                                                     //tipo Post.
-      const postsArray: Post[] = [];
-      for(const key in responseData) {
-        if(responseData.hasOwnProperty(key)) {
-          postsArray.push({ ...responseData[key], id: key/*, anotherProperty: 'Hola Enfermeraaaa!'*/ }) //No podemos anexar esta tercera
-                                                         //propiedad ya que es un Objeto tipo Post la cual tiene sus propiedades bien
-                                                         //definidas.
-        }
-      }
-      return postsArray;
-    }))
-    .subscribe(posts => {
-      // console.log(posts)
-      this.isFetching = false;
-      this.loadedPosts = posts;
-    });
-  }
+  // private fetchPosts() {
+  //   this.isFetching = true;
+  //   //toda la lógica se envió al servicio posts.service para tener un código lo mas limpio posible. por lo general, el trabajo "sucio"
+  //   //lo hace el servicio en cuestión.
+    
+  // }
 }
