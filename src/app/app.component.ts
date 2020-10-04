@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { stringify } from '@angular/compiler/src/util';
+import { Post } from './post.model';
 
 @Component({
   selector: 'app-root',
@@ -17,10 +18,10 @@ export class AppComponent implements OnInit {
     this.fetchPosts();
   }
 
-  onCreatePost(postData: { title: string; content: string }) {
+  onCreatePost(postData: Post) {
     // Send Http request
     // console.log(postData);
-    this.http.post(
+    this.http.post<{ name: string }>(
         'https://angular-project-excercise.firebaseio.com/posts.json', //Este .json que declaramos solo es necesario para Firebase.
         postData
         ).subscribe(responseData => {//Ese observable es provisto por Angular por lo que no necesitamos "desusbscribirlo".
@@ -40,12 +41,17 @@ export class AppComponent implements OnInit {
 
   private fetchPosts() {
     this.http
-    .get('https://angular-project-excercise.firebaseio.com/posts.json')
-    .pipe(map(responseData => {
-      const postsArray = [];
+          //podemos indicar tambien el tipo que retorna en el .post (líneas arriba)
+    .get<{ [key: string]: Post }>('https://angular-project-excercise.firebaseio.com/posts.json')
+    .pipe(map((responseData/*: { [key: string]: Post }*/) => { //Puedes usar un PlaceHolder property name con [] indicando que cualquier
+                                                     //string key que viene del objeto cuyo nombre pues desconocemos, contiene un Objeto 
+                                                     //tipo Post.
+      const postsArray: Post[] = [];
       for(const key in responseData) {
         if(responseData.hasOwnProperty(key)) {
-          postsArray.push({ ...responseData[key], id: key, anotherProperty: 'Hola Enfermeraaaa!' })
+          postsArray.push({ ...responseData[key], id: key/*, anotherProperty: 'Hola Enfermeraaaa!'*/ }) //No podemos anexar esta tercera
+                                                         //propiedad ya que es un Objeto tipo Post la cual tiene sus propiedades bien
+                                                         //definidas.
         }
       }
       return postsArray;
