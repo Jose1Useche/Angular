@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Post } from './post.model'
 import { map, catchError } from 'rxjs/operators';
 import { Subject, throwError } from 'rxjs';
@@ -30,11 +30,16 @@ export class PostsService {
                   //es decir, sin una subscripción involucrada Angular entiende que si no nos importa lo que retorne esto pues no nos
                   //interesa si llegó o no, por lo que Angular sencillamente no envía un requerimiento que no nos importa.
                   //Se hace el return para usar la subscripción en el componente.
+        let searchParams =  new HttpParams();
+        searchParams = searchParams.append('print','pretty');
+        searchParams = searchParams.append('culito','peluo');
         return this.http
           //podemos indicar tambien el tipo que retorna en el .post (líneas arriba)
         .get<{ [key: string]: Post }>('https://angular-project-excercise.firebaseio.com/posts.json',
         {
-            headers: new HttpHeaders({ 'Custom-Header': 'Hello' })
+            headers: new HttpHeaders({ 'Custom-Header': 'Hello' }),
+            // params: new HttpParams().set('print', 'pretty')
+            params: searchParams // fijate en el Network del browser en General, el Request del URL
         })
         .pipe(map((responseData/*: { [key: string]: Post }*/) => { //Puedes usar un PlaceHolder property name con [] indicando que 
             //cualquier string key que viene del objeto cuyo nombre pues desconocemos, contiene un Objeto tipo Post.
