@@ -21,8 +21,11 @@ export class PostsService {
             }); 
     }
 
-    fetchPost() {
-        this.http
+    fetchPost() { //quito la subscripción de este metodo ya que el requerimiento no se envía al servidor "si nadie lo toma en cuenta",
+                  //es decir, sin una subscripción involucrada Angular entiende que si no nos importa lo que retorne esto pues no nos
+                  //interesa si llegó o no, por lo que Angular sencillamente no envía un requerimiento que no nos importa.
+                  //Se hace el return para usar la subscripción en el componente.
+        return this.http
           //podemos indicar tambien el tipo que retorna en el .post (líneas arriba)
         .get<{ [key: string]: Post }>('https://angular-project-excercise.firebaseio.com/posts.json')
         .pipe(map((responseData/*: { [key: string]: Post }*/) => { //Puedes usar un PlaceHolder property name con [] indicando que 
@@ -36,11 +39,11 @@ export class PostsService {
             }
         }
         return postsArray;
-        }))
-        .subscribe(posts => {
-        // console.log(posts)
-        // this.isFetching = false;
-        // this.loadedPosts = posts;
-        });
+        }));
+        // .subscribe(posts => {
+        // // console.log(posts)
+        // // this.isFetching = false;
+        // // this.loadedPosts = posts;
+        // });
         }
 }
