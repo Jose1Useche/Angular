@@ -18,7 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient, private postsService: PostsService) {}
   
   ngOnInit() {
-    this.errorSub = this.postsService.error.subscribe(errorMessage => { //acá si necesitas desusbscribir porque es una custom subscribe
+    this.errorSub = this.postsService.error.subscribe(errorMessage => { //acá sí necesitas desusbscribir porque es una custom subscribe
       this.error = errorMessage;
     });
     this.fetchPostCleaner();
@@ -56,9 +56,14 @@ export class AppComponent implements OnInit, OnDestroy {
       this.isFetching = false;
       this.loadedPosts = posts;
     }, error => {
+      this.isFetching = false;
       this.error = error.message;
       console.log(error);
     });
+  }
+
+  onHandleError() {
+    this.error = null;
   }
 
   ngOnDestroy() {
