@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Post } from './post.model'
-import { map } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { Subject, throwError } from 'rxjs';
 
 @Injectable(/*{providedIn: 'root'}*/) //Podemos usar este approuch o podemos ir a nuestro app.module.ts y declarar este servicio dentro
                                       //de nuestro providers array, el cual me gusta mas.
@@ -44,7 +44,13 @@ export class PostsService {
             }
         }
         return postsArray;
-        }));
+        }),
+            catchError(errorRes => { //Visualmente no ves nada el en DOM, solo que el catch lo tienes disponibkle tambien por si necesitas
+                                     //mandar el error a algun otro lado.
+                //Send to analytics server
+                return throwError(errorRes);
+            })
+        );
         // .subscribe(posts => {
         // // console.log(posts)
         // // this.isFetching = false;
