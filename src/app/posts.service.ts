@@ -45,5 +45,9 @@ export class PostsService {
         // // this.isFetching = false;
         // // this.loadedPosts = posts;
         // });
-        }
+    }
+
+    deletePosts() {
+        return this.http.delete('https://angular-project-excercise.firebaseio.com/posts.json'); 
+    }
 }
