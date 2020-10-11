@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; //Para usar esta librería debemos injectar en el appModule a HttpClientModule
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { RecipeService } from '../recipes/recipe.service';
 import { Recipe } from '../recipes/recipe.model';
@@ -19,17 +19,19 @@ export class DataStorageService {
     }
 
     fetchRecipes() {
-        this.http.get<Recipe[]>('https://recipe-project-angular-fe060.firebaseio.com/chorizo.json')
-        .pipe(map(recipes => {
-            return recipes.map(recipe => {
-                return {
-                    ...recipe, 
-                    ingredients: recipe.ingredients ? recipe.ingredients : []
-                };
-            })
-        }))
-        .subscribe(recipes => {
-            this.recipeService.setRecipes(recipes);
-        });
+        return this.http.get<Recipe[]>('https://recipe-project-angular-fe060.firebaseio.com/chorizo.json')
+            .pipe(map(recipes => { //este map es de rxjs/operators el cual nos permite transformar esta data
+                    return recipes.map(recipe => { //este map es distinto ya que es un metodo normal de los arrays propio de JS.
+                        return {
+                            ...recipe, 
+                            ingredients: recipe.ingredients ? recipe.ingredients : []
+                        };
+                    })
+                }),
+                //El operador tap nos permite ejecutar cierto código justo acá sin alterar la data final que viene a través del observable
+                tap(recipes => {
+                    this.recipeService.setRecipes(recipes);
+                }) 
+            );
     }
 }

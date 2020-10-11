@@ -19,6 +19,7 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component'
 import { RecipeService } from './recipes/recipe.service';
 import { DataStorageService } from './shared/data-storage.service';
+import { RecipesResolverService } from './recipes/recipe-resolver.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { DataStorageService } from './shared/data-storage.service';
     HttpClientModule, //This is crucial to unlock the http client functionality in our application.
     AppRoutingModule,
   ],
-  providers: [ShoppingListService, RecipeService, DataStorageService],
+  providers: [ShoppingListService, RecipeService, DataStorageService, RecipesResolverService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
