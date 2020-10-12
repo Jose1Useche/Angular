@@ -3,13 +3,14 @@ import { Injectable } from "@angular/core";
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-interface AuthResponseData { //Esto como que no es muy necesario porque estoy viendo los mismos resultados sin esta interfaz...
+export interface AuthResponseData { //Esto como que no es muy necesario porque estoy viendo los mismos resultados sin esta interfaz...
     kind: string;
     idToken: string;
     email: string;
     refreshToken: string;
     expiresIn: string;
     localId: string;
+    registered?: boolean;
 }
 
 @Injectable()
@@ -36,6 +37,17 @@ export class AuthService {
                   }
                 return throwError(errorMessage);
             }));
+    }
+
+    login(email: string, password: string) {
+        return this.http.post<AuthResponseData>(
+            'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDtcgVJVK5HqPAkfmQy-Q72jR8d3oVxgdc',
+            {
+                email: email,
+                password: password,
+                returnSecureToken: true
+            }
+        );
     }
 
 }
