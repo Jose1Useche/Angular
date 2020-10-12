@@ -42,9 +42,13 @@ export class AuthComponent implements OnInit {
         .subscribe(resData => {
           console.log(resData);
           this.isLoading = false;
-        }, error => {
-          console.log(error);
-          this.activeError = 'An error occurred!';
+        }, errorMessage => {
+          console.log(errorMessage);
+          this.activeError = errorMessage;
+          // switch (errorRes.error.error.message) {
+          //   case 'EMAIL_EXISTS':
+          //     this.activeError = 'This Email exists already!';
+          // }
           this.isLoading = false;
         });
     }
