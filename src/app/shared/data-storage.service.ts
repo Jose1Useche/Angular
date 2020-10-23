@@ -20,32 +20,56 @@ export class DataStorageService {
     }
 
     fetchRecipes() {
-        return this.authService.user.pipe(take(1), exhaustMap(user => {//take() is called as a function and I simple pass a number to it. 
-                                                            //The number 1 tells to this function that it only want to take one value from 
-                                                            //that observable and there after it automatically unsubscribe.
-
-                                                                //exhaustMap() waits for the first observable, there after We get the
-                                                                //data from the first observable and return a new observable that will
-                                                                //be replace the first one. In this case is the http observable.
-
+       
             return this.http.get<Recipe[]>(
                 // 'https://recipe-project-angular-fe060.firebaseio.com/chorizo.json?auth=' + user.token
-                'https://recipe-project-angular-fe060.firebaseio.com/chorizo.json',
-                {
-                    params: new HttpParams().set('auth', user.token)
-                }
-                )
-        }),map(recipes => { //este map es de rxjs/operators el cual nos permite transformar esta data
-            return recipes.map(recipe => { //este map es distinto ya que es un metodo normal de los arrays propio de JS.
-                return {
-                    ...recipe, 
-                    ingredients: recipe.ingredients ? recipe.ingredients : []
-                };
-            })
-        }),
-        //El operador tap nos permite ejecutar cierto código justo acá sin alterar la data final que viene a través del observable
-        tap(recipes => {
-            this.recipeService.setRecipes(recipes);
-        }));
+                'https://recipe-project-angular-fe060.firebaseio.com/chorizo.json'
+                ).pipe(
+                    map(recipes => { //este map es de rxjs/operators el cual nos permite transformar esta data
+                        return recipes.map(recipe => { //este map es distinto ya que es un metodo normal de los arrays propio de JS.
+                            return {
+                                ...recipe, 
+                                ingredients: recipe.ingredients ? recipe.ingredients : []
+                            };
+                        })
+                    }),
+                    //El operador tap nos permite ejecutar cierto código justo acá sin alterar la data final que viene a través del observable
+                    tap(recipes => {
+                        this.recipeService.setRecipes(recipes);
+                    })
+                );
     }
+
+    /*La logica del metodo fetchRecipes() fue restructurada ya que ahora usa un interceptor, aunque se vea comentado tomar en cuenta
+        los comentarios que se encuentren a continuación.
+    */
+    // fetchRecipes() {
+    //     return this.authService.user.pipe(take(1), exhaustMap(user => {//take() is called as a function and I simple pass a number to it. 
+    //                                                         //The number 1 tells to this function that it only want to take one value from 
+    //                                                         //that observable and there after it automatically unsubscribe.
+
+    //                                                             //exhaustMap() waits for the first observable, there after We get the
+    //                                                             //data from the first observable and return a new observable that will
+    //                                                             //be replace the first one. In this case is the http observable.
+
+    //         return this.http.get<Recipe[]>(
+    //             // 'https://recipe-project-angular-fe060.firebaseio.com/chorizo.json?auth=' + user.token
+    //             'https://recipe-project-angular-fe060.firebaseio.com/chorizo.json',
+    //             {
+    //                 params: new HttpParams().set('auth', user.token)
+    //             }
+    //             )
+    //     }),map(recipes => { //este map es de rxjs/operators el cual nos permite transformar esta data
+    //         return recipes.map(recipe => { //este map es distinto ya que es un metodo normal de los arrays propio de JS.
+    //             return {
+    //                 ...recipe, 
+    //                 ingredients: recipe.ingredients ? recipe.ingredients : []
+    //             };
+    //         })
+    //     }),
+    //     //El operador tap nos permite ejecutar cierto código justo acá sin alterar la data final que viene a través del observable
+    //     tap(recipes => {
+    //         this.recipeService.setRecipes(recipes);
+    //     }));
+    // }
 }
