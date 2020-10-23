@@ -50,6 +50,29 @@ export class AuthService {
         }));
     }
 
+    autoLogin() {
+        const userData: {
+            email: string;
+            id: string;
+            _token: string; 
+            _tokenExpirationDate: string;
+        } = JSON.parse(localStorage.getItem('userDataJose'));
+        if(!userData) {
+            return;
+        }
+
+        const loadedUser = new User(
+            userData.email,
+            userData.id, 
+            userData._token,
+            new Date(userData._tokenExpirationDate)
+            );
+
+        if(loadedUser.token) {
+            this.user.next(loadedUser);
+        }
+    }
+
     logout() {
         this.user.next(null);
     }
@@ -65,6 +88,8 @@ export class AuthService {
                 expirationDate
             );
             this.user.next(user);
+            //esta propiedad me permite guardar data en el localStorage (en el browser)
+            localStorage.setItem('userDataJose', JSON.stringify(user)); //Transforma el JS Object en un string
     }
 
     private handleError(errorRes: HttpErrorResponse) {
