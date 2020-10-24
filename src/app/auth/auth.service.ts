@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from "@angular/core";
+import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
@@ -20,8 +21,9 @@ export class AuthService {
     // token: string = null;
     user = new BehaviorSubject<User>(null);//A BehaviorSubject holds one value. When it is subscribed it emits the value immediately. 
                                            //A Subject doesn't hold a value.
+    private tokenExpirationTimer: any;
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private router: Router) {}
 
     signup(email: string, password: string) {
         // El accounts:signUp?key se consigue en la configuración del Fire Base
@@ -70,11 +72,27 @@ export class AuthService {
 
         if(loadedUser.token) {
             this.user.next(loadedUser);
+            const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+            this.autoLogout(expirationDuration);
         }
     }
 
     logout() {
         this.user.next(null);
+        this.router.navigate(['/auth']);
+        // localStorage.clear(); //Con esto limpias todo el localStorage
+        localStorage.removeItem('userDataJose');
+        if(this.tokenExpirationTimer) {
+            clearTimeout(this.tokenExpirationTimer);
+        }
+        this.tokenExpirationTimer = null;
+    }
+
+    autoLogout(expirationDuration: number) {
+        console.log(expirationDuration);
+        this.tokenExpirationTimer = setTimeout(() => {
+            this.logout();
+        }, expirationDuration);
     }
 
     private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
@@ -88,6 +106,7 @@ export class AuthService {
                 expirationDate
             );
             this.user.next(user);
+            this.autoLogout(expiresIn * 1000);
             //esta propiedad me permite guardar data en el localStorage (en el browser)
             localStorage.setItem('userDataJose', JSON.stringify(user)); //Transforma el JS Object en un string
     }
