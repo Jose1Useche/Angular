@@ -26,14 +26,17 @@ import { RecipesRoutingModule } from './recipes-routing.module';
         ReactiveFormsModule, //habilito la creacion de formularios.
         RecipesRoutingModule 
     ],
-    exports: [ //Paso 2: Una vez que nuestros componentes están incluidos pues se habilita la opción de exportación para que cualquier
-               //otro módulo que implemente a recipes.module.ts pueda hacer uso de estos componentes.
-        RecipesComponent,
-        RecipeListComponent,
-        RecipeDetailComponent,
-        RecipeItemComponent,
-        RecipeStartComponent,
-        RecipeEditComponent,
-    ]
+    
+    //NOTA: no hay exportacion ya que se maneja desde RecipesRoutingModule
+
+    // exports: [ //Paso 2: Una vez que nuestros componentes están incluidos pues se habilita la opción de exportación para que cualquier
+    //            //otro módulo que implemente a recipes.module.ts pueda hacer uso de estos componentes.
+    //     RecipesComponent,
+    //     RecipeListComponent,
+    //     RecipeDetailComponent,
+    //     RecipeItemComponent,
+    //     RecipeStartComponent,
+    //     RecipeEditComponent,
+    // ]
 })
 export class RecipesModule { }
