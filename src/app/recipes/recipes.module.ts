@@ -7,9 +7,9 @@ import { RecipeItemComponent } from './recipe-list/recipe-item/recipe-item.compo
 import { RecipeStartComponent } from './recipe-start/recipe-start.component';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RecipesRoutingModule } from './recipes-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
     declarations: [ //Paso 1: Declaramos los componentes que vamos a utilizar acá en declarations. Debemos importarlos para poder usarlos.
@@ -22,7 +22,7 @@ import { RecipesRoutingModule } from './recipes-routing.module';
     ],
     imports: [
         RouterModule, // con esto corrijo los errores de enrutamiento
-        CommonModule, // con esto habilito los ngIf ngFor
+        SharedModule,// CommonModule, // con esto habilito los ngIf ngFor
         ReactiveFormsModule, //habilito la creacion de formularios.
         RecipesRoutingModule 
     ],

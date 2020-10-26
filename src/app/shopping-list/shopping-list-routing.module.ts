@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 import { ShoppingListComponent } from "./shopping-list.component";
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
     { path: 'shopping-list', component: ShoppingListComponent },
@@ -9,7 +10,10 @@ const routes: Routes = [
 
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [
+        RouterModule.forChild(routes),
+        SharedModule
+    ],
     exports: [RouterModule]
 })
 export class ShoppingListRoutingModule { }
