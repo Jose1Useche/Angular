@@ -5,10 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core.module';
-import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -26,8 +24,8 @@ import { AuthModule } from './auth/auth.module';
     HttpClientModule, //This is crucial to unlock the http client functionality in our application.
     AppRoutingModule,
     //It's now in lazy loading // RecipesModule,
-    ShoppingListModule,
-    AuthModule,
+    //It's now in lazy loading // ShoppingListModule,
+    //It's now in lazy loading // AuthModule,
     SharedModule,
     CoreModule // aquí metemos toda la seccion de los providers: []
   ],
