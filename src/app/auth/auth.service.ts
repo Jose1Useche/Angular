@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
+import { environment } from '../../environments/environment';
 
 export interface AuthResponseData { //Esto como que no es muy necesario porque estoy viendo los mismos resultados sin esta interfaz...
     kind: string;
@@ -28,7 +29,7 @@ export class AuthService {
     signup(email: string, password: string) {
         // El accounts:signUp?key se consigue en la configuración del Fire Base
         return this.http.post<AuthResponseData>(
-                'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDtcgVJVK5HqPAkfmQy-Q72jR8d3oVxgdc',
+                'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.fireBaseAPIKeyEnvironment,
                 {
                     email: email,
                     password: password,
@@ -41,7 +42,7 @@ export class AuthService {
 
     login(email: string, password: string) {
         return this.http.post<AuthResponseData>(
-            'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDtcgVJVK5HqPAkfmQy-Q72jR8d3oVxgdc',
+            'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.fireBaseAPIKeyEnvironment,
             {
                 email: email,
                 password: password,

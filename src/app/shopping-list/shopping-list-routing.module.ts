@@ -11,9 +11,9 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
+        SharedModule,//IMPORTANTISIMO EL ORDEN DE LA IMPORTACION, SE DEBE EJECUTAR EN UN ORDEN LÓGICO
         RouterModule.forChild(routes),
-        SharedModule
     ],
-    exports: [RouterModule]
+    exports: [RouterModule, SharedModule]
 })
 export class ShoppingListRoutingModule { }
