@@ -12,10 +12,18 @@ import { ShoppingListService } from './shopping-list.service';
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
   // ingredients: Ingredient[];
-  ingredients: Observable<{ ingredients: Ingredient[] }>;
-  private subscription: Subscription;
+  ingredients: Observable<{ ingredients: Ingredient[] }>;//Hacemos de esta propiedad un Observable porque lo que retorna
+                                                         //this.store.select('shoppingList'); es un Observable
+  // private subscription: Subscription;
 
-  constructor(private slService: ShoppingListService, private store: Store<{ shoppingList: { ingredients: Ingredient[] } }>) { }
+  constructor(
+    private slService: ShoppingListService, 
+    private store: Store<{ shoppingList: { ingredients: Ingredient[] } }> //El nombre shoppingList debe ser el mismo que se encuentra en
+                                                                          //el StoreModule del app.module.ts
+                                                                          //El nombre de la propiedad ingredients debe ser el mismo que
+                                                                          //se encuentra en shoppingListReducer (en este caso se refiere
+                                                                          //a la propiedad ingredients declarada dentro de initialState.
+    ) { }
   
   ngOnInit(): void {
     this.ingredients = this.store.select('shoppingList');
