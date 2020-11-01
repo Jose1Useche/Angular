@@ -8,13 +8,18 @@ const initialState = {
       ]
 };
 
-export function shoppingListReducer(state = initialState, action: ShoppingListActions.AddIngredient) {
+export function shoppingListReducer(state = initialState, action: ShoppingListActions.ShoppingListActions) {
     switch (action.type) {
       case ShoppingListActions.ADD_INGREDIENT:
         // state.ingredients.push() //Hacer esto es una mala práctica ya que el state debe ser inmutable. Se retorna un nuevo objeto...
         return {
           ...state,
           ingredients: [...state.ingredients, action.myPayload]
+        };
+      case ShoppingListActions.ADD_INGREDIENTS:
+        return {
+          ...state,
+          ingredients: [...state.ingredients, ...action.myPayload]
         };
       default:
         return state;
