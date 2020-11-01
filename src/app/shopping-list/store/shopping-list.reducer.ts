@@ -1,4 +1,4 @@
-import { Ingredient } from '../shared/ingredient.model';
+import { Ingredient } from '../../shared/ingredient.model';
 import * as ShoppingListActions from './shopping-list.actions';
 
 const initialState = {
@@ -16,5 +16,7 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
           ...state,
           ingredients: [...state.ingredients, action.myPayload]
         };
+      default:
+        return state;
     }
 }

@@ -1,12 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core.module';
+import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { CoreModule } from './core.module';
     //Se movió a auth.module.ts // ReactiveFormsModule,//We need this to sincronize our form with the html form.
     HttpClientModule, //This is crucial to unlock the http client functionality in our application.
     AppRoutingModule,
+    StoreModule.forRoot({shoppingList: shoppingListReducer}),
     //It's now in lazy loading // RecipesModule,
     //It's now in lazy loading // ShoppingListModule,
     //It's now in lazy loading // AuthModule,
