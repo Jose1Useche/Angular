@@ -33,24 +33,47 @@ export function shoppingListReducer(state: State = initialState, action: Shoppin
         };
 
       case ShoppingListActions.UPDATE_INGREDIENT:
-        const ingredient = state.ingredients[action.myPayload.index];
+        // const ingredient = state.ingredients[action.myPayload.index];
+        const ingredient = state.ingredients[state.editedIngredientIndex];
         const updatedIngredient = {
           ...ingredient,
-          ...action.myPayload.ingredient
+          // ...action.myPayload.ingredient
+          ...action.myPayload
         };
         const updatedIngredients = [...state.ingredients];
-        updatedIngredients[action.myPayload.index] = updatedIngredient;
+        // updatedIngredients[action.myPayload.index] = updatedIngredient;
+        updatedIngredients[state.editedIngredientIndex] = updatedIngredient;
         return {
           ...state,
-          ingredients: updatedIngredients
+          ingredients: updatedIngredients,
+          editedIngredientIndex: -1,
+          editedIngredient: null
         };
 
       case ShoppingListActions.DELETE_INGREDIENT:
         return {
           ...state,
           ingredients: state.ingredients.filter((ig, igIndex) => {
-            return igIndex !== action.myPayload;
-          })
+            // return igIndex !== action.myPayload;
+            return igIndex !== state.editedIngredientIndex;
+          }),
+          editedIngredientIndex: -1,
+          editedIngredient: null
+        };
+
+      case ShoppingListActions.START_EDIT:
+        return {
+          ...state,
+          editedIngredientIndex: action.myPayload,
+          editedIngredient: {...state.ingredients[action.myPayload]} //genero una nueva copia, un reference distinto a mi state ya que
+                                                                     //debe ser inmutable.
+        };
+
+      case ShoppingListActions.STOP_EDIT:
+        return {
+          ...state,
+          editedIngredient: null,
+          editedIngredientIndex: -1
         };
 
       default:
