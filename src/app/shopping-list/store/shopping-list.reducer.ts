@@ -7,9 +7,9 @@ export interface State {
   editedIngredientIndex: number;
 }
 
-export interface AppState {
-  shoppingList: State;
-}
+// export interface AppState { // El lugar mas adecuado para colocar esta interfaz es el app.reducer.ts para tratarse de forma global.
+//   shoppingList: State;
+// }
 
 const initialState: State = {
     ingredients: [new Ingredient('Apples', 5), new Ingredient('Tomatoes', 10)],

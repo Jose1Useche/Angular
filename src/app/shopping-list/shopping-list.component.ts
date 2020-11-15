@@ -4,8 +4,9 @@ import { Store } from '@ngrx/store';
 
 import { Ingredient } from '../shared/ingredient.model';
 // import { ShoppingListService } from './shopping-list.service';
-import * as fromShoppingList from './store/shopping-list.reducer';
+// import * as fromShoppingList from './store/shopping-list.reducer';
 import * as ShoppingListActions from './store/shopping-list.actions';
+import * as fromApp from '../store/app.reducer';
 
 @Component({
   selector: 'app-shopping-list',
@@ -20,7 +21,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   constructor(
     // private slService: ShoppingListService, 
-    private store: Store<fromShoppingList.AppState>
+    private store: Store<fromApp.AppState>
     // private store: Store<{ shoppingList: { ingredients: Ingredient[] } }> //El nombre shoppingList debe ser el mismo que se encuentra en
     //                                                                       //el StoreModule del app.module.ts
     //                                                                       //El nombre de la propiedad ingredients debe ser el mismo que
