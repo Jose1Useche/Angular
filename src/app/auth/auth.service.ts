@@ -1,10 +1,15 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from "@angular/core";
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { User } from './user.model';
+import { BehaviorSubject, Subject, throwError } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { environment } from '../../environments/environment';
+
+import { User } from './user.model';
+import * as fromApp from '../store/app.reducer';
+import * as AuthActions from './store/auth.actions';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
 export interface AuthResponseData { //Esto como que no es muy necesario porque estoy viendo los mismos resultados sin esta interfaz...
     kind: string;
@@ -24,7 +29,7 @@ export class AuthService {
                                            //A Subject doesn't hold a value.
     private tokenExpirationTimer: any;
 
-    constructor(private http: HttpClient, private router: Router) {}
+    constructor(private http: HttpClient, private router: Router, private store: Store<fromApp.AppState>) {}
 
     signup(email: string, password: string) {
         // El accounts:signUp?key se consigue en la configuración del Fire Base
@@ -72,14 +77,21 @@ export class AuthService {
             );
 
         if(loadedUser.token) {
-            this.user.next(loadedUser);
+            // this.user.next(loadedUser);
+            this.store.dispatch(new AuthActions.Login({ 
+                email: loadedUser.email, 
+                userId: loadedUser.id,
+                token: loadedUser.token,
+                expirationDate: new Date(userData._tokenExpirationDate)
+            }));
             const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
             this.autoLogout(expirationDuration);
         }
     }
 
     logout() {
-        this.user.next(null);
+        // this.user.next(null);
+        this.store.dispatch(new AuthActions.Logout());
         this.router.navigate(['/auth']);
         // localStorage.clear(); //Con esto limpias todo el localStorage
         localStorage.removeItem('userDataJose');
@@ -106,7 +118,13 @@ export class AuthService {
                 token, 
                 expirationDate
             );
-            this.user.next(user);
+            // this.user.next(user);
+            this.store.dispatch(new AuthActions.Login({
+                email: email,
+                userId: userId,
+                token: token,
+                expirationDate: expirationDate
+            }))
             this.autoLogout(expiresIn * 1000);
             //esta propiedad me permite guardar data en el localStorage (en el browser)
             localStorage.setItem('userDataJose', JSON.stringify(user)); //Transforma el JS Object en un string
