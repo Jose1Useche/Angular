@@ -9,7 +9,6 @@ import { environment } from '../../environments/environment';
 import { User } from './user.model';
 import * as fromApp from '../store/app.reducer';
 import * as AuthActions from './store/auth.actions';
-import { Action } from 'rxjs/internal/scheduler/Action';
 
 export interface AuthResponseData { //Esto como que no es muy necesario porque estoy viendo los mismos resultados sin esta interfaz...
     kind: string;
@@ -25,7 +24,7 @@ export interface AuthResponseData { //Esto como que no es muy necesario porque e
 export class AuthService {
     // user = new Subject<User>();
     // token: string = null;
-    user = new BehaviorSubject<User>(null);//A BehaviorSubject holds one value. When it is subscribed it emits the value immediately. 
+    // user = new BehaviorSubject<User>(null);//A BehaviorSubject holds one value. When it is subscribed it emits the value immediately. 
                                            //A Subject doesn't hold a value.
     private tokenExpirationTimer: any;
 
